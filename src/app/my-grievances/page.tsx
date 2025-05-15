@@ -151,7 +151,7 @@ export default function MyGrievancesPage() {
                   <div className="text-7xl mb-4">😴</div>
                   <h3 className="text-xl font-semibold text-gray-700 mb-1">No tea to sip on!</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
-                    You haven't received any grievances yet. Wait for your friends to spill some tea!
+                    You haven&apos;t received any grievances yet. Wait for your friends to spill some tea!
                   </p>
                 </div>
               ) : (
@@ -214,9 +214,9 @@ export default function MyGrievancesPage() {
               {sentGrievances.length === 0 ? (
                 <div className="text-center py-16 px-6">
                   <div className="text-7xl mb-4">🤐</div>
-                  <h3 className="text-xl font-semibold text-gray-700 mb-1">You haven't spilled any tea yet!</h3>
+                  <h3 className="text-xl font-semibold text-gray-700 mb-1">You haven&apos;t spilled any tea yet!</h3>
                   <p className="text-gray-500 max-w-md mx-auto mb-6">
-                    Time to let your friends know what's on your mind.
+                    Time to let your friends know what&apos;s on your mind.
                   </p>
                   <Link href="/send-grievance">
                     <Button>

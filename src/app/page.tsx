@@ -24,7 +24,7 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-8">
-              A fun and casual way to tell your friends what's bothering you, anonymously or not.
+              A fun and casual way to tell your friends what&apos;s bothering you, anonymously or not.
             </p>
             
             {!loading && (
@@ -62,7 +62,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold mb-3 text-gray-800">Send Grievances</h3>
               <p className="text-gray-600">
-                Let your friends know what's bothering you in a fun, casual way without the awkward face-to-face conversation.
+                Let your friends know what&apos;s bothering you in a fun, casual way without the awkward face-to-face conversation.
               </p>
             </div>
             

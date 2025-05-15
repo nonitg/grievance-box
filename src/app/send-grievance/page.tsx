@@ -7,7 +7,6 @@ import { AuthLayout } from '@/components/AuthLayout';
 import { addGrievance, getAllUsers, getUserProfile, createUserProfile } from '@/lib/firestore';
 import { GrievanceFormData, UserProfile } from '@/lib/types';
 import toast from 'react-hot-toast';
-import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { SearchableSelect } from '@/components/ui/SearchableSelect';
 
@@ -123,7 +122,7 @@ export default function SendGrievancePage() {
             <span className="text-2xl">☕</span>
           </h1>
           <p className="text-gray-600 mt-2 text-lg">
-            Let your friends know what's <em>really</em> bothering you
+            Let your friends know what&apos;s <em>really</em> bothering you
           </p>
         </div>
         
@@ -167,7 +166,7 @@ export default function SendGrievancePage() {
                 
                 <div>
                   <label htmlFor="content" className="block text-base font-semibold text-gray-700 mb-2">
-                    Spill it... what's bothering you? 💭
+                    Spill it... what&apos;s bothering you? 💭
                   </label>
                   <textarea
                     id="content"

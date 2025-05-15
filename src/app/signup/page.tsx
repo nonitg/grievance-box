@@ -17,7 +17,7 @@ interface SignupFormData {
 }
 
 export default function SignupPage() {
-  const { signUp, user } = useAuth();
+  const { signUp } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   
@@ -43,9 +43,13 @@ export default function SignupPage() {
       
       toast.success('Account created successfully!');
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Signup error:', error);
-      toast.error(error.message || 'Failed to create account');
+      // Type guard to safely access error.message
+      const errorMessage = error && typeof error === 'object' && 'message' in error 
+        ? (error.message as string) 
+        : 'Failed to create account';
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }

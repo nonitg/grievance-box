@@ -31,9 +31,13 @@ export default function LoginPage() {
       await signIn(data.email, data.password);
       toast.success('Logged in successfully!');
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
-      toast.error(error.message || 'Failed to login');
+      // Type guard to safely access error.message
+      const errorMessage = error && typeof error === 'object' && 'message' in error 
+        ? (error.message as string) 
+        : 'Failed to login';
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +95,7 @@ export default function LoginPage() {
         
         <div className="mt-8 text-center">
           <p className="text-base text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-teal-600 hover:text-teal-800 font-medium inline-flex items-center">
               <span>Sign up</span>
               <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
