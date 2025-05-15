@@ -13,8 +13,9 @@ export function Navigation() {
 
   const navLinks = [
     { name: 'Dashboard', path: '/dashboard', icon: '📊' },
-    { name: 'My Grievances', path: '/my-grievances', icon: '📝' },
     { name: 'Send Grievance', path: '/send-grievance', icon: '✉️' },
+    { name: 'Public Board', path: '/public-board', icon: '☕' },
+    { name: 'My Tea', path: '/my-tea', icon: '🫖' },
   ];
 
   return (

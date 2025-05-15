@@ -9,6 +9,7 @@ A fun, casual web application that allows your friend group to submit grievances
 - 🕵️ Option to send anonymously
 - 📊 Dashboard to view received grievances
 - 📋 Separate pages for sent and received grievances
+- ☕ Public Tea Board for sharing gossip with upvotes
 - 🎨 Modern, clean, and fun UI design
 
 ## Tech Stack
@@ -142,6 +143,17 @@ A fun, casual web application that allows your friend group to submit grievances
              (resource.data.senderUid == request.auth.uid || 
               resource.data.recipientUid == request.auth.uid);
          }
+         match /teaPosts/{postId} {
+           // Anyone can read tea posts
+           allow read: if true;
+           // Only authenticated users can create posts
+           allow create: if request.auth != null;
+           // Only the author can update or delete their posts
+           allow update, delete: if request.auth != null && resource.data.authorUid == request.auth.uid;
+           // Allow authenticated users to upvote (which will check in the application code)
+           allow update: if request.auth != null && 
+             request.resource.data.diff(resource.data).affectedKeys().hasOnly(['upvotes', 'upvotedBy']);
+         }
        }
      }
      ```
@@ -162,7 +174,13 @@ A fun, casual web application that allows your friend group to submit grievances
    - Choose whether to send anonymously or not
    - Submit your grievance
 
-4. **Manage Grievances**:
+4. **Public Tea Board**:
+   - View tea (gossip) posted by the community
+   - Share your own tea anonymously or not
+   - Upvote posts you enjoy
+   - As the author, you can delete your own posts
+
+5. **Manage Grievances**:
    - View all received and sent grievances
    - Mark grievances as read
    - Delete grievances you no longer want

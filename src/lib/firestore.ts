@@ -9,10 +9,14 @@ import {
   serverTimestamp, 
   deleteDoc,
   getDoc,
-  setDoc
+  setDoc,
+  arrayUnion,
+  arrayRemove,
+  orderBy,
+  limit
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { Grievance, UserProfile } from './types';
+import { Grievance, UserProfile, TeaPost } from './types';
 
 // User profile functions
 export const createUserProfile = async (userData: UserProfile) => {
@@ -126,4 +130,89 @@ export const markGrievanceAsRead = async (id: string) => {
 export const deleteGrievance = async (id: string) => {
   const grievanceRef = doc(db, 'grievances', id);
   await deleteDoc(grievanceRef);
+};
+
+// Tea post functions
+export const addTeaPost = async (teaPost: Omit<TeaPost, 'id' | 'upvotes' | 'upvotedBy'>) => {
+  return addDoc(collection(db, 'teaPosts'), {
+    ...teaPost,
+    createdAt: Date.now(),
+    upvotes: 0,
+    upvotedBy: [],
+  });
+};
+
+export const getAllTeaPosts = async (limitCount: number = 20): Promise<TeaPost[]> => {
+  try {
+    const teaPostsQuery = query(
+      collection(db, 'teaPosts'),
+      orderBy('upvotes', 'desc'),
+      limit(limitCount)
+    );
+    
+    const querySnapshot = await getDocs(teaPostsQuery);
+    
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    } as TeaPost));
+  } catch (error) {
+    console.error("Error fetching tea posts:", error);
+    return [];
+  }
+};
+
+export const getUserTeaPosts = async (uid: string): Promise<TeaPost[]> => {
+  if (!uid) {
+    console.error("No user ID provided for getUserTeaPosts");
+    return [];
+  }
+  
+  try {
+    const teaPostsQuery = query(
+      collection(db, 'teaPosts'),
+      where('authorUid', '==', uid),
+      orderBy('createdAt', 'desc')
+    );
+    
+    const querySnapshot = await getDocs(teaPostsQuery);
+    
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    } as TeaPost));
+  } catch (error) {
+    console.error("Error fetching user tea posts:", error);
+    return [];
+  }
+};
+
+export const upvoteTeaPost = async (postId: string, userId: string) => {
+  const postRef = doc(db, 'teaPosts', postId);
+  const postDoc = await getDoc(postRef);
+  
+  if (!postDoc.exists()) {
+    throw new Error("Post not found");
+  }
+  
+  const post = postDoc.data() as TeaPost;
+  
+  if (post.upvotedBy.includes(userId)) {
+    // User has already upvoted, remove upvote
+    await updateDoc(postRef, {
+      upvotes: post.upvotes - 1,
+      upvotedBy: arrayRemove(userId)
+    });
+  } else {
+    // User hasn't upvoted, add upvote
+    await updateDoc(postRef, {
+      upvotes: post.upvotes + 1,
+      upvotedBy: arrayUnion(userId)
+    });
+  }
+};
+
+export const deleteTeaPost = async (id: string) => {
+  const teaPostRef = doc(db, 'teaPosts', id);
+  await deleteDoc(teaPostRef);
 };

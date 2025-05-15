@@ -20,3 +20,19 @@ export interface GrievanceFormData {
   recipientUid: string;
   isAnonymous: boolean;
 }
+
+export interface TeaPost {
+  id?: string;
+  content: string;
+  createdAt: number;
+  authorUid: string;
+  authorName: string | null;
+  isAnonymous: boolean;
+  upvotes: number;
+  upvotedBy: string[]; // Array of user IDs who have upvoted
+}
+
+export interface TeaPostFormData {
+  content: string;
+  isAnonymous: boolean;
+}
