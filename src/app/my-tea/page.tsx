@@ -53,7 +53,7 @@ export default function MyTeaPage() {
               <span className="text-2xl">🫖</span>
             </h1>
             <p className="text-gray-600 mt-2 text-lg">
-              Manage all the tea you've shared on the public board
+              Manage all the tea you&apos;ve shared on the public board
             </p>
           </div>
           
