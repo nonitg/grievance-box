@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { addTeaPost } from '@/lib/firestore';
 import { Button } from './Button';
-import { TeaPostFormData } from '@/lib/types';
 import { Modal } from './Modal';
 
 interface TeaPostFormProps {
@@ -50,7 +49,7 @@ export const TeaPostForm: React.FC<TeaPostFormProps> = ({ onSuccess, isModal = f
       <div className="mb-4">
         <textarea
           className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none transition-all text-gray-800"
-          placeholder="What's the tea today? Spill it here..."
+          placeholder="What&apos;s the tea today? Spill it here..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={4}
@@ -125,7 +124,7 @@ export const TeaPostForm: React.FC<TeaPostFormProps> = ({ onSuccess, isModal = f
             <span>Share Some Tea</span>
           </h2>
           <p className="text-gray-500 text-sm mt-1">
-            What's the gossip? Share it with the community.
+            What&apos;s the gossip? Share it with the community.
           </p>
         </div>
       )}

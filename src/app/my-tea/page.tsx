@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { TeaPost as TeaPostType } from '@/lib/types';
 import { getUserTeaPosts } from '@/lib/firestore';
 import { TeaPost } from '@/components/ui/TeaPost';
@@ -17,7 +17,7 @@ export default function MyTeaPage() {
   const [posts, setPosts] = useState<TeaPostType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     if (!user) return;
     
     setIsLoading(true);
@@ -29,7 +29,7 @@ export default function MyTeaPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -37,7 +37,7 @@ export default function MyTeaPage() {
     } else {
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user, router, fetchPosts]);
 
   if (!user) {
     return null;
@@ -77,7 +77,7 @@ export default function MyTeaPage() {
         ) : posts.length === 0 ? (
           <div className="bg-white rounded-xl shadow-md border border-gray-100 p-10 text-center">
             <div className="text-7xl mb-4">🫖</div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-1">You haven't shared any tea yet</h3>
+            <h3 className="text-xl font-semibold text-gray-700 mb-1">You haven&apos;t shared any tea yet</h3>
             <p className="text-gray-500 max-w-md mx-auto mb-6">
               Use the + button to start sharing tea with the community!
             </p>

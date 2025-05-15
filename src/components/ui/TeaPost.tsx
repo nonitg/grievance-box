@@ -4,7 +4,6 @@ import React from 'react';
 import { TeaPost as TeaPostType } from '@/lib/types';
 import { upvoteTeaPost, deleteTeaPost } from '@/lib/firestore';
 import { useAuth } from '@/lib/auth-context';
-import { Button } from './Button';
 import { formatDistanceToNow } from 'date-fns';
 
 interface TeaPostProps {
